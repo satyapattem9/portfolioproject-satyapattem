@@ -9,12 +9,12 @@ package components.musicplaylist;
 public abstract class MusicPlaylistSecondary<T> implements MusicPlaylist<T> {
 
     @Override
-    public void play() {
+    public final void play() {
         this.setPlaying(true);
     }
 
     @Override
-    public void next() {
+    public final void next() {
         int current = this.currentIndex();
 
         if (current + 1 >= this.length()) {
@@ -25,12 +25,12 @@ public abstract class MusicPlaylistSecondary<T> implements MusicPlaylist<T> {
     }
 
     @Override
-    public void pause() {
+    public final void pause() {
         this.setPlaying(false);
     }
 
     @Override
-    public void previous() {
+    public final void previous() {
         int current = this.currentIndex();
 
         if (current - 1 < 0) {
@@ -41,7 +41,7 @@ public abstract class MusicPlaylistSecondary<T> implements MusicPlaylist<T> {
     }
 
     @Override
-    public T currentTrack() {
+    public final T currentTrack() {
         int current = this.currentIndex();
 
         T curTrack = this.remove(current);
@@ -51,13 +51,13 @@ public abstract class MusicPlaylistSecondary<T> implements MusicPlaylist<T> {
     }
 
     @Override
-    public void append(T track) {
+    public final void append(T track) {
         int length = this.length();
         this.add(length, track);
     }
 
     @Override
-    public T removeCurrent() {
+    public final T removeCurrent() {
         int current = this.currentIndex();
         T curTrack = this.remove(current);
 
@@ -65,12 +65,29 @@ public abstract class MusicPlaylistSecondary<T> implements MusicPlaylist<T> {
     }
 
     @Override
-    public boolean contains(T track) {
+    public final boolean contains(T track) {
+        int length = this.length();
+        boolean playlistContains = false;
 
+        for (int i = 0; i < length; i++) {
+
+            int current = this.currentIndex();
+
+            T curTrack = this.remove(current);
+            this.add(current, curTrack);
+
+            if (track == curTrack) {
+                playlistContains = true;
+            }
+        }
+        return playlistContains;
     }
 
     @Override
-    public void clearTracks() {
-
+    public final void clearTracks() {
+        int length = this.length();
+        for (int i = 0; i < length; i++) {
+            this.remove(i);
+        }
     }
 }
