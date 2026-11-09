@@ -55,7 +55,7 @@ public interface MusicPlaylist<T> extends MusicPlaylistKernel<T> {
 
     /**
      * Appends a track to the end of the playlist.
-     * 
+     *
      * @param track
      *            the track to be appended
      * @ensures track track will be appended at the end of playlist
